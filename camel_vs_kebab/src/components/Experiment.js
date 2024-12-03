@@ -12,13 +12,21 @@ function Experiment() {
   const [disableButtons, setDisableButtons] = useState(false);
   const [shuffledOptions, setShuffledOptions] = useState([]);
   const [incorrectOptions, setIncorrectOptions] = useState([]);
+  const [shuffledTasks, setShuffledTasks] = useState([]); // State to store shuffled tasks
   const navigate = useNavigate();
 
   const tasks = [
+    // Task objects (unchanged)
     {
       identifier: "moveSouth",
       type: "camelCase",
       distractors: ["moveSource", "moreSouth", "moverSound"],
+      sentence: "move south",
+    },
+    {
+      identifier: "move-south",
+      type: "kebabCase",
+      distractors: ["move-source", "more-south", "mover-sound"],
       sentence: "move south",
     },
     {
@@ -28,15 +36,33 @@ function Experiment() {
       sentence: "calculate total",
     },
     {
+      identifier: "calculate-total",
+      type: "kebabCase",
+      distractors: ["calculate-sum", "total-calculation", "sum-calculate"],
+      sentence: "calculate total",
+    },
+    {
+      identifier: "userLoginDetails",
+      type: "camelCase",
+      distractors: ["userDetails", "loginUserDetails", "userLogins"],
+      sentence: "user login details",
+    },
+    {
       identifier: "user-login-details",
       type: "kebabCase",
       distractors: ["user-details", "login-user-details", "user-logins"],
       sentence: "user login details",
     },
     {
+      identifier: "sendMessage",
+      type: "camelCase",
+      distractors: ["seedMastodon", "sandMessenger", "deliverMessage"],
+      sentence: "send message",
+    },
+    {
       identifier: "send-message",
       type: "kebabCase",
-      distractors: ["seed-mastodon", "sand-messenger", "deliverMessage"],
+      distractors: ["seed-mastodon", "sand-messenger", "deliver-message"],
       sentence: "send message",
     },
     {
@@ -44,6 +70,18 @@ function Experiment() {
       type: "camelCase",
       distractors: ["processStart", "initiateProcess", "streamProcess"],
       sentence: "start process",
+    },
+    {
+      identifier: "start-process",
+      type: "kebabCase",
+      distractors: ["process-start", "initiates-process", "stream-process"],
+      sentence: "start process",
+    },
+    {
+      identifier: "refreshPage",
+      type: "kebabCase",
+      distractors: ["reloadPage", "resetPage", "updatePage"],
+      sentence: "refresh page",
     },
     {
       identifier: "refresh-page",
@@ -58,28 +96,16 @@ function Experiment() {
       sentence: "no pain no gain",
     },
     {
-      identifier: "delete-item",
+      identifier: "no-pain-no-gain",
       type: "kebabCase",
-      distractors: ["remove-item", "erase-item", "discard-item"],
-      sentence: "delete item",
+      distractors: ["no-pace-no-taste", "no-pane-no-gain", "no-past-no-gassed"],
+      sentence: "no pain no gain",
     },
     {
-      identifier: "add-to-cart",
-      type: "kebabCase",
-      distractors: ["add-cart", "place-cart", "cart-add"],
-      sentence: "add to cart",
-    },
-    {
-      identifier: "openFile",
+      identifier: "asSoonAsPossible",
       type: "camelCase",
-      distractors: ["openFolder", "openFiles", "startFile"],
-      sentence: "open file",
-    },
-    {
-      identifier: "goodGame",
-      type: "camelCase",
-      distractors: ["goodgame", "badGame", "goodDay"],
-      sentence: "good game",
+      distractors: ["asSoonPossible", "soonAsPossible", "asSoupAsPossible"],
+      sentence: "as soon as possible",
     },
     {
       identifier: "as-soon-as-possible",
@@ -88,40 +114,16 @@ function Experiment() {
       sentence: "as soon as possible",
     },
     {
-      identifier: "noWay",
-      type: "camelCase",
-      distractors: ["noShame", "noWave", "noPhase"],
-      sentence: "no way",
-    },
-    {
-      identifier: "yes-man",
-      type: "kebabCase",
-      distractors: ["no-man", "yes-men", "yes-can"],
-      sentence: "yes man",
-    },
-    {
-      identifier: "frontEnd",
-      type: "camelCase",
-      distractors: ["backEnd", "frontMen", "frontMad"],
-      sentence: "front end",
-    },
-    {
       identifier: "appleCare",
       type: "camelCase",
       distractors: ["appleStare", "apleCare", "apppleCare"],
       sentence: "apple care",
     },
     {
-      identifier: "hugoBoss",
-      type: "camelCase",
-      distractors: ["hugoBros", "hugeBoss", "bossHugo"],
-      sentence: "hugo boss",
-    },
-    {
-      identifier: "pop-punk",
+      identifier: "apple-care",
       type: "kebabCase",
-      distractors: ["pro-funk", "per-punk", "pop-drunk"],
-      sentence: "pop punk",
+      distractors: ["apple-stare", "aple-care", "appple-care"],
+      sentence: "apple care",
     },
     {
       identifier: "ciao-a-tutti",
@@ -130,16 +132,19 @@ function Experiment() {
       sentence: "ciao a tutti",
     },
     {
-      identifier: "end-of-experiment",
-      type: "kebabCase",
-      distractors: ["sand-of-experiment", "end-or-experiment", "end-of-ecsperiment"],
-      sentence: "end of experiment",
+      identifier: "ciaoATutti",
+      type: "camelCase",
+      distractors: ["ciaoTutti", "ciaoAiBrutti", "cioaATutti"],
+      sentence: "ciao a tutti",
     },
   ];
 
   useEffect(() => {
+    // Shuffle tasks when the component mounts
+    const shuffled = tasks.sort(() => Math.random() - 0.5);
+    setShuffledTasks(shuffled);
     setTaskData([]); // Clear previous experiment data
-  }, [setTaskData]);
+  }, [setTaskData]); // Runs only when component mounts or setTaskData changes
 
   useEffect(() => {
     if (countdown > 0) {
@@ -151,39 +156,42 @@ function Experiment() {
   }, [countdown, startTime]);
 
   useEffect(() => {
-    if (tasks && tasks.length > 0) {
-      const options = [tasks[currentTaskIndex].identifier, ...tasks[currentTaskIndex].distractors];
+    if (shuffledTasks && shuffledTasks.length > 0) {
+      const options = [
+        shuffledTasks[currentTaskIndex].identifier,
+        ...shuffledTasks[currentTaskIndex].distractors,
+      ];
       setShuffledOptions(options.sort(() => Math.random() - 0.5));
       setIncorrectOptions([]);
     }
-  // eslint-disable-next-line
-  }, [currentTaskIndex]);
-
+  }, [currentTaskIndex, shuffledTasks]);
 
   const handleOptionClick = (isCorrect, option) => {
     const endTime = Date.now();
     const timeTaken = endTime - startTime;
-  
+
     if (disableButtons) return;
-  
+
     if (isCorrect) {
       setFeedbackColor({ [option]: "green" });
       setDisableButtons(true);
-  
+
       setTaskData((prev) => {
-        const updatedData = prev.filter((task) => task.identifier !== tasks[currentTaskIndex].identifier);
+        const updatedData = prev.filter(
+            (task) => task.identifier !== shuffledTasks[currentTaskIndex].identifier
+        );
         return [
           ...updatedData,
           {
-            ...tasks[currentTaskIndex],
+            ...shuffledTasks[currentTaskIndex],
             timeTaken,
             isCorrect: true,
           },
         ];
       });
-  
+
       setTimeout(() => {
-        if (currentTaskIndex + 1 < tasks.length) {
+        if (currentTaskIndex + 1 < shuffledTasks.length) {
           setCurrentTaskIndex(currentTaskIndex + 1);
           setStartTime(Date.now());
           setFeedbackColor({});
@@ -196,88 +204,88 @@ function Experiment() {
     } else {
       if (!disableButtons) {
         setTaskData((prev) => {
-          const existingTask = prev.find((task) => task.identifier === tasks[currentTaskIndex].identifier);
+          const existingTask = prev.find(
+              (task) => task.identifier === shuffledTasks[currentTaskIndex].identifier
+          );
           if (existingTask && existingTask.isCorrect) {
             return prev;
           }
-          const updatedData = prev.filter((task) => task.identifier !== tasks[currentTaskIndex].identifier);
+          const updatedData = prev.filter(
+              (task) => task.identifier !== shuffledTasks[currentTaskIndex].identifier
+          );
           return [
             ...updatedData,
             {
-              ...tasks[currentTaskIndex],
+              ...shuffledTasks[currentTaskIndex],
               timeTaken,
               isCorrect: false,
             },
           ];
         });
       }
-  
+
       setIncorrectOptions((prev) => [...prev, option]);
     }
   };
-  
-  
 
   const generateCsvData = () => {
     const csvContent = Papa.unparse(
-      taskData.map((task) => ({
-        name: formData.name,
-        age: formData.age,
-        experience: formData.experience,
-        identifier: task.identifier,
-        type: task.type,
-        timeTaken: task.timeTaken,
-        isCorrect: task.isCorrect,
-      }))
+        taskData.map((task) => ({
+          name: formData.name,
+          age: formData.age,
+          experience: formData.experience,
+          identifier: task.identifier,
+          type: task.type,
+          timeTaken: task.timeTaken,
+          isCorrect: task.isCorrect,
+        }))
     );
 
     setCsvData(csvContent);
   };
 
   return (
-    <div>
-      <header>
-        <h1>Experiment</h1>
-      </header>
-      <main>
-        {countdown > 0 ? (
-          <div>
-            <h1>The experiment will start in:</h1>
-            <h1>{countdown}</h1>
-          </div>
-        ) : currentTaskIndex < tasks.length ? (
-          <div>
-            <p>
-              Identify the corresponding identifier for:
-            </p>
-            <h1>
-              <strong>{tasks[currentTaskIndex].sentence}</strong>
-            </h1>
-            <div className="card-grid">
-              {shuffledOptions.map((option, index) => (
-                <button
-                  key={index}
-                  className="card-button"
-                  onClick={() =>
-                    handleOptionClick(option === tasks[currentTaskIndex].identifier, option)
-                  }
-                  style={{
-                    backgroundColor:
-                      feedbackColor[option] || (incorrectOptions.includes(option) ? "red" : ""),
-                    pointerEvents: disableButtons ? "none" : "auto",
-                  }}                  
-                >
-                  {option}
-                </button>
-              ))}
-            </div>
-            <p>Task {currentTaskIndex + 1} of {tasks.length}</p>
-          </div>
-        ) : (
-          <p>Experiment completed!</p>
-        )}
-      </main>
-    </div>
+      <div>
+        <header>
+          <h1>Experiment</h1>
+        </header>
+        <main>
+          {countdown > 0 ? (
+              <div>
+                <h1>The experiment will start in:</h1>
+                <h1>{countdown}</h1>
+              </div>
+          ) : currentTaskIndex < shuffledTasks.length ? (
+              <div>
+                <p>Identify the corresponding identifier for:</p>
+                <h1>
+                  <strong>{shuffledTasks[currentTaskIndex].sentence}</strong>
+                </h1>
+                <div className="card-grid">
+                  {shuffledOptions.map((option, index) => (
+                      <button
+                          key={index}
+                          className="card-button"
+                          onClick={() =>
+                              handleOptionClick(option === shuffledTasks[currentTaskIndex].identifier, option)
+                          }
+                          style={{
+                            backgroundColor:
+                                feedbackColor[option] || (incorrectOptions.includes(option) ? "red" : ""),
+                            pointerEvents: disableButtons ? "none" : "auto",
+                          }}
+                      >
+                        {option}
+                      </button>
+                  ))}
+                </div>
+                <p>Task {currentTaskIndex + 1} of {shuffledTasks.length}</p>
+              </div>
+          ) : (
+              <p>Experiment completed!</p>
+          )}
+        </main>
+      </div>
   );
 }
 
