@@ -109,20 +109,3 @@ ul li {
   transform: scale(1.05);
 }
 
-/* Correct Answer */
-.card-button.correct {
-  background-color: #4caf50;
-  color: white;
-}
-
-/* Incorrect Answer */
-.card-button.incorrect {
-  background-color: #f44336;
-  color: white;
-}
-
-/* Disabled Buttons */
-.card-button:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
