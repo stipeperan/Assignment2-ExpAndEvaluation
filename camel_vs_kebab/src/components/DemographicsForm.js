@@ -50,7 +50,7 @@ function DemographicsForm() {
             />
           </label>
           <label className="form-label">
-            Experience Level:
+            Programming Experience:
             <select
               name="experience"
               value={formData.experience}
