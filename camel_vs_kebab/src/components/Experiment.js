@@ -144,6 +144,7 @@ function Experiment() {
     const shuffled = tasks.sort(() => Math.random() - 0.5);
     setShuffledTasks(shuffled);
     setTaskData([]); // Clear previous experiment data
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setTaskData]); // Runs only when component mounts or setTaskData changes
 
   useEffect(() => {

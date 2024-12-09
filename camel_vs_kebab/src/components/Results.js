@@ -51,7 +51,7 @@ function ResultPage() {
     const totalKebabCaseTime = (totalKebabCaseTimeMs / 1000).toFixed(2);
 
     return (
-        <div>
+        <div class="wrapper">
             <header>
                 <h1>Experiment Results</h1>
             </header>

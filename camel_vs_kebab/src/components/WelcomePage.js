@@ -2,7 +2,7 @@ import React from "react";
 
 function WelcomePage() {
   return (
-      <div>
+      <div class="wrapper">
         <header>
           <h1>Welcome to the Experiment!</h1>
         </header>
@@ -29,7 +29,7 @@ function WelcomePage() {
             </p>
             <div style={{ textAlign: "center", margin: "20px 0" }}>
               <img
-                  src="/Test.png"
+                  src="/Test.png" alt=""
                   style={{ maxWidth: "100%", height: "auto", padding: "10px" }}
               />
             </div>

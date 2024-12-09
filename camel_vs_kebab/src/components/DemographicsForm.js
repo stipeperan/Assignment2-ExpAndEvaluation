@@ -21,7 +21,7 @@ function DemographicsForm() {
   };
 
   return (
-    <div>
+    <div class="wrapper">
       <header>
         <h1>Demographics Form</h1>
       </header>
