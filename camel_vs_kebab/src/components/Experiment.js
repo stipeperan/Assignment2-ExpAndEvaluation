@@ -79,7 +79,7 @@ function Experiment() {
     },
     {
       identifier: "refreshPage",
-      type: "kebabCase",
+      type: "camelCase",
       distractors: ["reloadPage", "resetPage", "updatePage"],
       sentence: "refresh page",
     },
