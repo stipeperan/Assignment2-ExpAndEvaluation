@@ -5,3 +5,7 @@
 3. section 2.1 entirly completed
 
 4. section 2.2 done all explenatio untill the design of the experiment.
+
+5. Check off the characteristics of your experimental design (only remains to add the figure   	containing all the permutations).
+
+6. Describe who will take / took part in your experiment. Provide descriptive/summative statistics 		of their gender, age, professional backgrounds, and any other characteristics that may be 	  	relevant to your experiment. Also explain how you will recruit / recruited them 		(volunteers recruited through email, classmates who were asked to do this, etc) and how 		you will allocate / allocated them into the different study conditions, i.e., control 		group vs experimental group(s).
