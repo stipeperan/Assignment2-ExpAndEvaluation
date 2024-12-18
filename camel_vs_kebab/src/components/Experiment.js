@@ -12,11 +12,11 @@ function Experiment() {
   const [disableButtons, setDisableButtons] = useState(false);
   const [shuffledOptions, setShuffledOptions] = useState([]);
   const [incorrectOptions, setIncorrectOptions] = useState([]);
-  const [shuffledTasks, setShuffledTasks] = useState([]); // State to store shuffled tasks
+  const [shuffledTasks, setShuffledTasks] = useState([]);
   const navigate = useNavigate();
 
   const tasks = [
-    // Task objects (unchanged)
+    // Task objects
     {
       identifier: "moveSouth",
       type: "camelCase",
@@ -143,9 +143,9 @@ function Experiment() {
     // Shuffle tasks when the component mounts
     const shuffled = tasks.sort(() => Math.random() - 0.5);
     setShuffledTasks(shuffled);
-    setTaskData([]); // Clear previous experiment data
+    setTaskData([]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [setTaskData]); // Runs only when component mounts or setTaskData changes
+  }, [setTaskData]);
 
   useEffect(() => {
     if (countdown > 0) {
