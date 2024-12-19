@@ -140,7 +140,6 @@ function Experiment() {
   ];
 
   useEffect(() => {
-    // Shuffle tasks when the component mounts
     const shuffled = tasks.sort(() => Math.random() - 0.5);
     setShuffledTasks(shuffled);
     setTaskData([]);

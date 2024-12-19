@@ -30,14 +30,12 @@ function downloadCSV(taskData, formData) {
 function ResultPage() {
     const { taskData, formData } = useContext(DataContext);
 
-    // Automatically download the CSV file when the component mounts
     useEffect(() => {
         if (taskData && formData) {
             downloadCSV(taskData, formData);
         }
     }, [taskData, formData]);
 
-    // Calculate total and average times in seconds
     const totalOverallTimeMs = taskData.reduce((sum, task) => sum + task.timeTaken, 0);
     const totalOverallTime = (totalOverallTimeMs / 1000).toFixed(2);
 
